@@ -1,0 +1,151 @@
+Application features
+Add players
+Create competitions
+Post news
+
+
+** Backend **
+- create userModel
+- create teamModel
+ ADMIN USER
+ - Add a team
+ - Update scores
+ - update player
+ - Update team
+  
+  SUPER ADMIN
+  - Add a team
+  - Update profile
+ - Update scores
+ - update player
+ - Update team
+  
+  FEATURES OF PLASU TEAM **
+    Matches -
+    - date, venue, teams, result, status
+    - update match details
+  - Search Players
+  - Add Players 
+    -First name (required)
+    - Last name
+    - Matric. no
+    - Jersey number
+    - position
+    - date joined
+    - dob
+    - club
+
+  ** FEATURES OF A COMPETITION **
+  - search players and teams
+  - register a team 
+      - Adding players to a team -
+        - First name (required)
+        - Last name
+        - Jersey number
+        - position
+      - players profile
+        - General details
+          - Name 
+          - Mat no.
+          - dob
+          - profile picture
+          - popular name
+          - position 
+          - Jersey no.
+        - Personal details
+          ADDRESS
+          - School Address 1 compulsory
+          - Home Address 2 compulsory
+          - State of origin
+          - LGA
+          - Postal code
+          CONTACT
+          - phone number 1 compulsory
+          - phone number 2
+          - email
+          PERSONAL
+          - gender
+          - marital status
+          - age
+          - Jersey size
+          - jersey number
+          - shoe size
+          - track suite size
+            Individual Awards
+            - Player of the year
+            - Sportsman of the year
+            - Fair player of the year
+            - Golden gloves of the year
+            - Defender of the year
+            - Midfielder of the year
+            - Striker of the year
+            - Highest goal scorer of the year
+            - Highest assist of the year
+
+          TECHNICAL DETAILS
+          - Position
+          - Prefered foot 
+          - Club 
+          - club joined date
+          - Number of previous  matches
+          - Number of goals  matches
+          - Number of goals conceded matches
+          - Coach Remark
+
+          PHYSIOLOGICAL DETAILS
+          - Height
+          - Weight
+          - Chest
+          - BMI 
+            Physical Test, 
+              - pressup test 
+              - situp test
+              - Vertical jump test
+            
+          MEDICAL DETAILS
+          - Blood group
+          - disabilities
+          - Appointments
+          - operations
+          - MRI/CT/X-ray
+          - Screening Forms
+          - injuries
+          - Supplements/drugs
+
+         REFERENCE CONTACT
+            details of reference contact
+
+  - list All players registered for a competition and their details
+  
+ADD COMPETITION
+    - competition name
+    - competiton type
+    - select team / number of  teams
+    - number of players in each team for competiton
+    - number of yellow cards to miss a match / disqualify player  
+    - From date - to date
+    - status
+    DISPLAY OFFICIALS, TEAMS AND PLAYERS IN COMPETITION
+  
+  ASSIGN OFFICIALS FOR COMPETITION
+  ADD TEAMS
+  - 
+  MATCH DETAILS AND UPDATES
+  - create matches -
+    - date, venue, teams, result, status
+
+REPORTS:
+- competition performace report
+  - competition name
+  - competition type
+  - competition period : from - to
+  - competition team
+  - competiton performance:
+    - overall performance
+    - technique
+    - other comments
+  -report
+   - prepared by: name
+   - role : admin/superadmin
+   - report prepared on: date  
+- match performance
