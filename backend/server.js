@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import dbConnection from "./config/dbConnection.js";
 import dotenv from "dotenv";
+import userRoutes from './routes/authroute.js';
 
 dotenv.config();
 
@@ -11,6 +12,8 @@ dbConnection();
 
 app.use(express.json({ limit: "50mb" }));
 app.use(morgan("dev"));
+
+app.use('/api/auth', userRoutes)
 
 app.get("/", (req, res) => {
   res.json({ plasu_sports_team: "Welcome to Plasu-Sports-Team" });

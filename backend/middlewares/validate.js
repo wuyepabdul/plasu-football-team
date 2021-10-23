@@ -17,7 +17,7 @@ export const signinValidator = [
     .not()
     .isEmpty()
     .trim()
-    .withMessage("Staff ID Can not be Empty "),
+    .withMessage("Email cannot be empty "),
   check("password")
     .isLength({ min: 4 })
     .trim()
