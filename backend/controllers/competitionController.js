@@ -47,3 +47,14 @@ export const getAllCompetitonsController = asyncHandler(async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+export const getCompetitonById = asyncHandler(async (req, res) => {
+  try {
+    const competiton = await Competition.findById(req.params.id);
+    if (competition) res.json(competiton);
+    res.status(404).json({ message: 'Competiton not found' });
+  } catch (error) {
+    console.log('error', error.messahe);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
