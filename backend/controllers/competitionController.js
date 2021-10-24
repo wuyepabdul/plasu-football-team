@@ -36,3 +36,14 @@ export const createCompetitionController = asyncHandler(async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+export const getAllCompetitonsController = asyncHandler(async (req, res) => {
+  try {
+    const competitions = await Competition.find({});
+    if (competitions.length > 0) res.json(competitions);
+    res.json({ message: 'There are no competitons now' });
+  } catch (error) {
+    console.log('error', error.messahe);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
