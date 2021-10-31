@@ -18,16 +18,30 @@ export const registerTeamController = asyncHandler(async (req, res) => {
   }
 });
 
-export const getTeamController = asyncHandler(async (req, res) => {
+export const getAllTeamsController = asyncHandler(async (req, res) => {
   try {
-    const team = await CompetitionTeam.findById(req.params.id);
-    if (team) {
-      res.json(team);
+    const teams = await CompetitionTeam.find({});
+    if (teams.length ===0) {
+      res.json({message:'No teams registered yet'});
     } else {
-      res.status(404).json({ message: 'Team not found' });
+      res.json(teams);
     }
   } catch (error) {
     console.log('error', error.message);
     res.status(500).json({ message: 'Server error, try again later' });
   }
 });
+
+export const getTeamController = asyncHandler(async (req, res) => {
+    try {
+      const team = await CompetitionTeam.findById(req.params.id);
+      if (team) {
+        res.json(team);
+      } else {
+        res.status(404).json({ message: 'Team not found' });
+      }
+    } catch (error) {
+      console.log('error', error.message);
+      res.status(500).json({ message: 'Server error, try again later' });
+    }
+  });
