@@ -3,10 +3,10 @@ import CompetitionTeam from '../models/CompetitionTeamsModel';
 
 export const registerTeam = asyncHandler(async (req, res) => {
   try {
-    const { teamName, teamLogo, coach, competition } = req.body;
+    const { teamName, teamColors, coach, competition } = req.body;
     const newTeam = new CompetitionTeam({
       teamName,
-      teamLogo,
+      teamColors,
       coach,
       competition,
     });

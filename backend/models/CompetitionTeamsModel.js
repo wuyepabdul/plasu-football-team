@@ -13,7 +13,7 @@ const playerSchema = new mongoose.Schema({
 const teamSchema = new mongoose.Schema(
   {
     teamName: { type: String, required: true },
-    teamLogo: { type: String },
+    teamColors: { type: String },
     players: [playerSchema],
     coach: { type: String },
     competition:{type:ObjectId, ref:'Competition'}
