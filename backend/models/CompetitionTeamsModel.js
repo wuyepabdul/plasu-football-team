@@ -2,12 +2,12 @@ import mongoose from 'mongoose';
 const {ObjectId} = mongoose.Schema.Types;
 
 const playerSchema = new mongoose.Schema({
-  name: { type: String },
-  position: { type: String },
-  jerseyNumber: { type: Number },
-  department: { type: String },
-  faculty: { type: String },
-  localGovArea: { type: String },
+  name: { type: String, trim:true},
+  position: { type: String, trim:true  },
+  jerseyNumber: { type: Number, trim:true },
+  department: { type: String, trim:true },
+  faculty: { type: String, trim:true },
+  localGovArea: { type: String, trim:true },
 });
 
 const teamSchema = new mongoose.Schema(

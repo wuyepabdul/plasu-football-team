@@ -18,6 +18,65 @@ export const registerTeamController = asyncHandler(async (req, res) => {
   }
 });
 
+export const teamRegPlayerController = asyncHandler(async (req, res) => {
+  try {
+    const { name, position, jerseyNumber, department, faculty, localGovArea } =
+      req.body;
+    const team = await CompetitionTeam.findById(req.params.id);
+    if (team) {
+      const alreadyRegistered = team.players.find(
+        (player) => player.name === name
+      );
+      if (alreadyRegistered) {
+        res
+          .status(400)
+          .json({ message: 'Already registered', alreadyRegistered });
+      } else {
+        const playerInfo = {
+          name,
+          position,
+          jerseyNumber,
+          department,
+          faculty,
+          localGovArea,
+        };
+        console.log(playerInfo);
+        team.players.push(playerInfo);
+        await team.save();
+      }
+    } else {
+      res.status(404).json({ message: 'Team not found' });
+    }
+    res.json({ message: 'Player added successFully', team });
+  } catch (error) {
+    console.log('error', error.message);
+    res.status(500).json({ message: 'Server error, try again later' });
+  }
+});
+
+export const teamDeletePlayerController = asyncHandler(async (req, res) => {
+  try {
+    const { name } = req.body;
+    const team = await CompetitionTeam.findById(req.params.id);
+    if (team) {
+      const player = team.players.find((player) => player.name === name);
+      if (player) {
+        console.log(team.players);
+        console.log(player);
+        team.players.pull(player);
+
+        await team.save();
+      }
+    } else {
+      res.status(404).json({ message: 'Team not found' });
+    }
+    res.json({ message: 'Player deleted successFully', team });
+  } catch (error) {
+    console.log('error', error.message);
+    res.status(500).json({ message: 'Server error, try again later' });
+  }
+});
+
 export const getAllTeamsController = asyncHandler(async (req, res) => {
   try {
     const teams = await CompetitionTeam.find({});
@@ -48,21 +107,21 @@ export const getTeamController = asyncHandler(async (req, res) => {
 
 export const updateTeamController = asyncHandler(async (req, res) => {
   try {
-    const { teamName, teamColors, coach, competition, playerInfo } = req.body;
+    const { teamName, teamColors, coach, competition } = req.body;
     const team = await CompetitionTeam.findById(req.params.id);
     if (team) {
       team.teamName = teamName || team.teamName;
       team.teamColors = teamColors || team.teamColors;
       team.coach = coach || team.coach;
       team.competition = competition || team.competition;
-      team.players.map((player) => {
+      /*   team.players.map((player) => {
         player.name = playerInfo.name || player.name;
         player.position = playerInfo.position || player.position;
         player.jerseyNumber = playerInfo.jerseyNumber || player.jerseyNumber;
         player.department = playerInfo.department || player.department;
         player.faculty = playerInfo.faculty || player.faculty;
         player.localGovArea = playerInfo.localGovArea || player.localGovArea;
-      });
+      }); */
     } else {
       res.status(404).json({ message: 'Team not found' });
     }
@@ -91,4 +150,3 @@ export const deleteCompetitionTeamController = asyncHandler(
     }
   }
 );
-
