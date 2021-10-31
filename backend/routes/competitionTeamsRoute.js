@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  deleteCompetitionTeamController,
+  deleteTeamController,
   getAllTeamsController,
   getTeamController,
   registerTeamController,
@@ -19,12 +19,12 @@ router.post('/:id/player', teamRegPlayerController);
 
 router.put('/:id/player/:playerId', teamUpdatePlayerController);
 
-router.delete('/:id/player', teamDeletePlayerController);
+router.delete('/:id/player/:playerId', teamDeletePlayerController);
 
 router.get('/:id', getTeamController);
 
 router.put('/:id', updateTeamController);
 
-router.delete('/:id', deleteCompetitionTeamController);
+router.delete('/:id', deleteTeamController);
 
 export default router;

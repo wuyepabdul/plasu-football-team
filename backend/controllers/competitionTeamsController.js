@@ -62,16 +62,17 @@ export const teamRegPlayerController = asyncHandler(async (req, res) => {
 
 export const teamDeletePlayerController = asyncHandler(async (req, res) => {
   try {
-    const { name } = req.body;
     const team = await CompetitionTeam.findById(req.params.id);
     if (team) {
-      const player = team.players.find((player) => player.name === name);
+      const player = team.players.find(
+        (player) => player.id === req.params.playerId
+      );
       if (player) {
         team.players.pull(player);
         await team.save();
+      } else {
+        return res.status(404).json({ message: 'Player not found' });
       }
-    } else {
-      res.status(404).json({ message: 'Team not found' });
     }
     res.json({ message: 'Player deleted successFully', team });
   } catch (error) {
@@ -147,14 +148,6 @@ export const updateTeamController = asyncHandler(async (req, res) => {
       team.teamColors = teamColors || team.teamColors;
       team.coach = coach || team.coach;
       team.competition = competition || team.competition;
-      /*   team.players.map((player) => {
-        player.name = playerInfo.name || player.name;
-        player.position = playerInfo.position || player.position;
-        player.jerseyNumber = playerInfo.jerseyNumber || player.jerseyNumber;
-        player.department = playerInfo.department || player.department;
-        player.faculty = playerInfo.faculty || player.faculty;
-        player.localGovArea = playerInfo.localGovArea || player.localGovArea;
-      }); */
     } else {
       res.status(404).json({ message: 'Team not found' });
     }
@@ -166,20 +159,18 @@ export const updateTeamController = asyncHandler(async (req, res) => {
   }
 });
 
-export const deleteCompetitionTeamController = asyncHandler(
-  async (req, res) => {
-    try {
-      const deletedTeam = await CompetitionTeam.findOneAndDelete({
-        _id: req.params.id,
-      }).exec();
-      if (deletedTeam) {
-        res.json({ message: 'Team Deleted', deletedTeam });
-      } else {
-        res.status(404).json('Team not found');
-      }
-    } catch (error) {
-      console.log('error', error.message);
-      res.status(500).json({ message: 'Server error' });
+export const deleteTeamController = asyncHandler(async (req, res) => {
+  try {
+    const deletedTeam = await CompetitionTeam.findOneAndDelete({
+      _id: req.params.id,
+    }).exec();
+    if (deletedTeam) {
+      res.json({ message: 'Team Deleted', deletedTeam });
+    } else {
+      res.status(404).json('Team not found');
     }
+  } catch (error) {
+    console.log('error', error.message);
+    res.status(500).json({ message: 'Server error' });
   }
-);
+});
