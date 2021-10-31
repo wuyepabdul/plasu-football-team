@@ -6,6 +6,7 @@ import {
   registerTeamController,
   teamDeletePlayerController,
   teamRegPlayerController,
+  teamUpdatePlayerController,
   updateTeamController,
 } from '../controllers/competitionTeamsController.js';
 const router = express.Router();
@@ -14,9 +15,11 @@ router.post('/', registerTeamController);
 
 router.get('/', getAllTeamsController);
 
-router.post('/:id/regPlayer', teamRegPlayerController);
+router.post('/:id/player', teamRegPlayerController);
 
-router.delete('/:id/regPlayer', teamDeletePlayerController);
+router.put('/:id/player/:playerId', teamUpdatePlayerController);
+
+router.delete('/:id/player', teamDeletePlayerController);
 
 router.get('/:id', getTeamController);
 

@@ -1,17 +1,23 @@
 import asyncHandler from 'express-async-handler';
 import CompetitionTeam from '../models/CompetitionTeamsModel.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export const registerTeamController = asyncHandler(async (req, res) => {
   try {
     const { teamName, teamColors, coach, competition } = req.body;
-    const newTeam = new CompetitionTeam({
-      teamName,
-      teamColors,
-      coach,
-      competition,
-    });
-    const savedTeam = await newTeam.save();
-    res.json({ message: 'Team registration successful', savedTeam });
+    const teamExist = await CompetitionTeam.findOne({ teamName });
+    if (teamExist) {
+      return res.status(400).json({ message: 'A Team with this name exist' });
+    } else {
+      const newTeam = new CompetitionTeam({
+        teamName,
+        teamColors,
+        coach,
+        competition,
+      });
+      const savedTeam = await newTeam.save();
+      res.json({ message: 'Team registration successful', savedTeam });
+    }
   } catch (error) {
     console.log('error', error.message);
     res.status(500).json({ message: 'Server error, try again later' });
@@ -28,11 +34,12 @@ export const teamRegPlayerController = asyncHandler(async (req, res) => {
         (player) => player.name === name
       );
       if (alreadyRegistered) {
-        res
+        return res
           .status(400)
           .json({ message: 'Already registered', alreadyRegistered });
       } else {
         const playerInfo = {
+          id: uuidv4(),
           name,
           position,
           jerseyNumber,
@@ -40,12 +47,11 @@ export const teamRegPlayerController = asyncHandler(async (req, res) => {
           faculty,
           localGovArea,
         };
-        console.log(playerInfo);
         team.players.push(playerInfo);
         await team.save();
       }
     } else {
-      res.status(404).json({ message: 'Team not found' });
+      return res.status(404).json({ message: 'Team not found' });
     }
     res.json({ message: 'Player added successFully', team });
   } catch (error) {
@@ -61,16 +67,43 @@ export const teamDeletePlayerController = asyncHandler(async (req, res) => {
     if (team) {
       const player = team.players.find((player) => player.name === name);
       if (player) {
-        console.log(team.players);
-        console.log(player);
         team.players.pull(player);
-
         await team.save();
       }
     } else {
       res.status(404).json({ message: 'Team not found' });
     }
     res.json({ message: 'Player deleted successFully', team });
+  } catch (error) {
+    console.log('error', error.message);
+    res.status(500).json({ message: 'Server error, try again later' });
+  }
+});
+
+export const teamUpdatePlayerController = asyncHandler(async (req, res) => {
+  try {
+    const { name, position, jerseyNumber, department, faculty, localGovArea } =
+      req.body;
+    const team = await CompetitionTeam.findById(req.params.id);
+    if (team) {
+      let player = team.players.find(
+        (player) => player.id === req.params.playerId
+      );
+      if (player) {
+        player.name = name || player.name;
+        player.position = position || player.position;
+        player.jerseyNumber = jerseyNumber || player.jerseyNumber;
+        player.department = department || player.department;
+        player.faculty = faculty || player.faculty;
+        player.localGovArea = localGovArea || player.localGovArea;
+        await team.save();
+      } else {
+        return res.status(404).json({ message: 'Player not found' });
+      }
+    } else {
+      res.status(404).json({ message: 'Team not found' });
+    }
+    res.json({ message: 'Player info updated successFully', team });
   } catch (error) {
     console.log('error', error.message);
     res.status(500).json({ message: 'Server error, try again later' });
