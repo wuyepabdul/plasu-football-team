@@ -6,6 +6,7 @@ const competionSchema = new mongoose.Schema(
     title: { type: String, required: true },
     description: { type: String, required: true },
     topScorers: [{ playerName: { type: ObjectId, ref: 'Player' } }],
+    topAssists: [{ playerName: { type: ObjectId, ref: 'Player' } }],
     numberOfTeams: { type: Number, required: true },
     numOfTeamPlayers: { type: Number, required: true },
     numOfYellowCardsToDisqualify: { type: Number, required: true },
