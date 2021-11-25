@@ -28,6 +28,8 @@ export const updateProfileValidator = [
   check("name").not().isEmpty().trim().withMessage("All fields are required"),
 ];
 
+
+
 export const validatorResult = (req, res, next) => {
   const result = validationResult(req);
   const hasErrors = !result.isEmpty();

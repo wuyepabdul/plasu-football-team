@@ -104,7 +104,7 @@ export const teamUpdatePlayerController = asyncHandler(async (req, res) => {
     } else {
       res.status(404).json({ message: 'Team not found' });
     }
-    res.json({ message: 'Player info updated successFully', team });
+    return res.json({ message: 'Player info updated successFully', team });
   } catch (error) {
     console.log('error', error.message);
     res.status(500).json({ message: 'Server error, try again later' });

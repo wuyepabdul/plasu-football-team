@@ -55,8 +55,11 @@ export const getAllCompetitonsController = asyncHandler(async (req, res) => {
 export const getCompetitonById = asyncHandler(async (req, res) => {
   try {
     const competition = await Competition.findById(req.params.id);
-    if (competition) res.json(competition);
-    res.status(404).json({ message: 'Competiton not found' });
+    if (competition){
+      res.json(competition);
+    } else{
+      res.status(404).json({ message: 'Competiton not found' });
+    }
   } catch (error) {
     console.log('error', error.message);
     res.status(500).json({ message: 'Server error' });
@@ -75,19 +78,27 @@ export const updateCompetitonById = asyncHandler(async (req, res) => {
       endDate,
       reports,
     } = req.body;
+
+    const competitionTitleExist = await Competition.find({title});
     const competition = await Competition.findById(req.params.id);
+
+  
     if (competition) {
-      competition.title = title || competition.title;
-      competition.description = description || competition.description;
-      competition.numberOfTeams = numberOfTeams || competition.numberOfTeams;
-      competition.numOfTeamPlayers =
-        numOfTeamPlayers || competition.numOfTeamPlayers;
-      competition.numOfYellowCardsToDisqualify =
-        numOfYellowCardsToDisqualify ||
-        competition.numOfYellowCardsToDisqualify;
-      competition.startDate = startDate || competition.startDate;
-      competition.endDate = endDate || competition.endDate;
-      competition.reports = reports || competition.reports;
+      if(competitionTitleExist){
+       return res.status(400).json({message:'A competition already exist with this title'})
+      }else{
+        competition.title = title || competition.title;
+        competition.description = description || competition.description;
+        competition.numberOfTeams = numberOfTeams || competition.numberOfTeams;
+        competition.numOfTeamPlayers =
+          numOfTeamPlayers || competition.numOfTeamPlayers;
+        competition.numOfYellowCardsToDisqualify =
+          numOfYellowCardsToDisqualify ||
+          competition.numOfYellowCardsToDisqualify;
+        competition.startDate = startDate || competition.startDate;
+        competition.endDate = endDate || competition.endDate;
+        competition.reports = reports || competition.reports;
+      }
     }
     competition.save();
     res.json({ message: 'Competition updated successfully', competition });
