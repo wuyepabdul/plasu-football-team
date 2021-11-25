@@ -30,6 +30,7 @@
     "express-validator": "^6.12.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.10",
+    "react-responsive-carousel": "^3.2.22",
     "slugify": "^1.6.1",
     "uuid": "^8.3.2"
   },
