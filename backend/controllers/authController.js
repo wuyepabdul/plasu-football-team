@@ -18,7 +18,6 @@ export const signinController = asyncHandler(async (req, res) => {
           name: userExist.name,
           email: userExist.email,
           _id: userExist._id,
-          cart: userExist.cart,
           token: generateToken(userExist._id),
         });
       }
@@ -55,7 +54,6 @@ export const signupController = asyncHandler(async (req, res) => {
         _id: savedUser._id,
         name: savedUser.name,
         email: savedUser.email,
-        cart: savedUser.cart,
         role: savedUser.role,
         token: generateToken(savedUser._id),
       });

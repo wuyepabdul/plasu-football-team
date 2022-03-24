@@ -15,16 +15,6 @@ import {
   import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
   
   const Links = ["Shop", "Help", "Blog"];
-  const Options = [
-    "Filter By",
-    "All Products",
-    "New Products",
-    "Sets",
-    "Skin Care",
-    "Hair & Body Care",
-    "Accessories",
-  ];
-  
   const NavLink = ({ children }) => (
     <Link
       px={2}
@@ -43,7 +33,7 @@ import {
   const Navbar = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
-      <Box pt="2" bg="#f5f5f4" alignItems="stretch">
+      <Box pt="2"  alignItems="stretch">
         <Box px="10">
           <Flex
             h={16}
@@ -77,7 +67,6 @@ import {
             </HStack>
             <HStack spacing={8} alignItems={"center"}>
               <NavLink>Account</NavLink>
-  
             </HStack>
           </Flex>
   

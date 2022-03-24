@@ -7,6 +7,6 @@ const router = express.Router();
 router.post('/signup', registerValidator, validatorResult, signupController);
 router.post('/login', signinValidator, validatorResult, signinController);
 
-router.post('/competiton',createCompetitionController)
+// router.post('/competiton',createCompetitionController)
 
 export default router;
